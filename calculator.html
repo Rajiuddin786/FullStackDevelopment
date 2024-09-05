@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #calculator {
+            position: absolute;
+            border: 2px solid black;
+            height: 500px;
+            width: 280px;
+            margin-left: 40%;
+            margin-top: 50px;
+        }
+
+        #output {
+            width: 97%;
+            height: 20%;
+        }
+        #key{
+            width: 23%;
+            height: 15%;
+            margin-top: 3px;
+            margin-left: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        function calculate(val){
+            if(val == "C"){
+                document.getElementById("output").value = "";
+            }
+            else if(val == "%"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "DEL"){
+                let exp = document.getElementById("output").value;
+                let l = exp.length;
+                document.getElementById("output").value = exp.slice(0,l-1);
+            }
+            else if(val == "/"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "7"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "8"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "9"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "*"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "4"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "5"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "6"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "-"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "1"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "2"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "3"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "+"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "00"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "0"){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else if(val == "."){
+                document.getElementById("output").value = document.getElementById("output").value + val;
+            }
+            else{
+                document.getElementById("output").value = eval(document.getElementById("output").value);
+            }
+        }
+    </script>
+    <div id="calculator">
+        <input readonly type="text" id="output">
+        <input onclick="calculate(this.value)" type="button" value="C" id="key">
+        <input onclick="calculate(this.value)" type="button" value="%" id="key">
+        <input onclick="calculate(this.value)" type="button" value="DEL" id="key">
+        <input onclick="calculate(this.value)" type="button" value="/" id="key">
+        <input onclick="calculate(this.value)" type="button" value="7" id="key">
+        <input onclick="calculate(this.value)" type="button" value="8" id="key">
+        <input onclick="calculate(this.value)" type="button" value="9" id="key">
+        <input onclick="calculate(this.value)" type="button"value="*"  id="key">
+        <input onclick="calculate(this.value)" type="button" value="4" id="key">
+        <input onclick="calculate(this.value)" type="button" value="5" id="key">
+        <input onclick="calculate(this.value)" type="button" value="6" id="key">
+        <input onclick="calculate(this.value)" type="button" value="-" id="key">
+        <input onclick="calculate(this.value)" type="button" value="1" id="key">
+        <input onclick="calculate(this.value)" type="button" value="2" id="key">
+        <input onclick="calculate(this.value)" type="button" value="3" id="key">
+        <input onclick="calculate(this.value)" type="button" value="+" id="key">
+        <input onclick="calculate(this.value)" type="button" value="00" id="key">
+        <input onclick="calculate(this.value)" type="button" value="0" id="key">
+        <input onclick="calculate(this.value)" type="button" value="=" id="key">
+        <input onclick="calculate(this.value)" type="button" value="." id="key">
+    </div>
+</body>
+
+</html>
