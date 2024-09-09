@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            position: absolute;
+            margin-left: 40%;
+            margin-top: 30px;
+        }
+        #count{
+            text-align: center;
+            height: 50px;
+            width: 200px;
+        }
+        .icrdec{
+            height: 50px;
+            width: 100px;
+        }
+        #reset{
+            position: absolute;
+            height: 50px;
+            width: 210px;
+            margin-top: 60px;
+            margin-left: -210px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function count(s){
+            if(s == '+'){
+                document.getElementById("count").value = parseInt(document.getElementById('count').value)+1;
+            }
+            else if(s == '-'){
+                document.getElementById("count").value = parseInt(document.getElementById('count').value - 1);
+            }
+            else{
+                document.getElementById('count').value = 0;
+            }
+        }
+    </script>
+    <div id="box">
+        <input readonly type="text" value="0" id="count">
+        <input onclick="count(this.value)" type="button" value="+" class="icrdec">
+        <input onclick="count(this.value)" type="button" value="-" class="icrdec">
+        <input onclick="count(this.value)" type="button" value="RESET" id="reset">
+    </div>
+</body>
+</html>
