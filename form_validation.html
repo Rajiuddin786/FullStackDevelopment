@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            position: absolute;
+            margin-left: 40%;
+            margin-top: 10%;
+            border: 2px solid black;
+        }
+        #box input{
+            margin: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function validate(){
+            name = document.getElementById('f_name').value;
+            email = document.getElementById('email').value;
+            epassword = document.getElementById('epass').value;
+            cpassword = document.getElementById('cpass').value;
+            if (name.length == 0){
+                alert("Name Cannot Be Empty");
+                document.getElementById('f_name').focus();
+                return false;
+            }
+            len_email = email.length;
+            validate_email = false;
+            sp_present = false;
+            dot_present = false;
+            for(let i=0;i<len_email;i++){
+                if(email[i] == '@'){
+                    pos_sp = i;
+                    sp_present= true;
+                }
+                if(email[i] == '.'){
+                    pos_dot = i;
+                    dot_present = true;
+                }
+            }
+            if(sp_present && dot_present){
+                domain_dot = email.slice(pos_dot+1,len_email);
+                domain_sp = email.slice(pos_sp+1,pos_dot);
+                if(domain_dot.length >= 2 && domain_sp.length != 0 && pos_dot > pos_sp) {validate_email = true;}
+            }
+            if (validate_email == false){
+                alert("ENTER A VALID EMAIL");
+                document.getElementById('email').focus();
+                return false;
+            }
+            pass_len = epassword.length;
+            if(pass_len < 8){
+                if(pass_len == 0) {alert('PASSWORD CANNOT BE EMPTY');}
+                else {alert("ENTER A VALID PASSWORD");}
+
+                document.getElementById('epass').focus();
+                return false;
+            }
+            sp_pass_present = false;
+            num_pass_present = false;
+            valid_pass = false;
+            for(let i=0;i<pass_len;i++){
+                let special_character = /[^a-zA-Z0-9]/;
+                let number = /[0-9]/;
+                if (special_character.test(epassword[i])){
+                    sp_pass_present = true;
+                }
+                if(number.test(epassword[i])){
+                    num_pass_present = true;
+                }
+                if(num_pass_present && sp_pass_present){
+                    valid_pass = true;
+                    break;
+                }
+            }
+            if(valid_pass == false){
+                alert("ENTER A VALID PASSWORD");
+                document.getElementById('epass').focus();
+                return false;
+            }
+            if(cpassword != epassword){
+                if(cpassword.length == 0) alert("CONFIRM YOUR PASSWORD");
+                else
+                alert("PASSWORD DOES NOT MATCH");
+
+                document.getElementById('cpass').focus();
+                return false;
+            }
+        }
+    </script>
+    <div id="box">
+        <form name="myForm" onsubmit="return validate()">
+            <input type="text" placeholder="First Name" id="f_name">
+            <input type="text" placeholder="Last Name" id="l_name">
+            <br>
+            <input type="text" placeholder="Enter Email" id="email">
+            <br>
+            <input type="text" placeholder="Enter Password" id="epass">
+            <br>
+            <input type="text" placeholder="Confirm Password" id="cpass">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
