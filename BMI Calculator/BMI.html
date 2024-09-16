@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #bmi_scale {
+            position: absolute;
+            margin-left: 25%;
+        }
+
+        #arrow {
+            position: absolute;
+            margin-left: 40%;
+            margin-top: 20%;
+            height: 50px;
+            width: 90px;
+            background-color: white;
+            transform-origin: 100% 50%;
+            transition: transform 0.5s linear;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <form action="" id="form_">
+            <img src="1726374000710-fotor-bg-remover-2024091595017-removebg-preview.png" alt="" id="arrow" >
+            <img src="1000074229-fotor-202409159389-removebg-preview.png" alt="" id="bmi_scale" >
+            <input type="text" name="" id="height" placeholder="ENTER YOUR HEIGHT(in cm)" class="input_field"> <br>
+            <input type="text" name="" id="weight" placeholder="ENTER YOUR WEIGHT(in kg)" class="input_field"> <br>
+            <input readonly type="text" id="bmi_value" class="input_field">
+            <input type="submit" value="Calculate" id="calculate_button">
+        </form>
+    </div>
+    <script>
+        const form_ = document.getElementById('form_');
+        form_.addEventListener('submit',function(event){
+            event.preventDefault();
+            calculate();
+        })
+        function rotate_arrow(rotation){
+            arrow = document.getElementById('arrow');
+            arrow.style.transform = `rotate(${rotation}deg)`;
+        }
+        function calculate(){
+            height = parseFloat(document.getElementById('height').value)/100;
+            weight = parseFloat(document.getElementById('weight').value);
+            bmi = weight/(height*height);
+            document.getElementById('bmi_value').value = bmi.toFixed(2);
+            if(bmi < 18.5) rotation = 15;
+            else if (bmi >=18.5 && bmi <= 24.9) rotation = 45;
+            else if(bmi >= 25 && bmi <=29.9) rotation = 90;
+            else if(bmi >= 30 && bmi <=34.9) rotation = 120;
+            else if(bmi >=35 && bmi <=39.9) rotation = 150;
+            else rotation = 180;
+            rotate_arrow(rotation);
+        }
+    </script>
+</body>
+
+</html>
