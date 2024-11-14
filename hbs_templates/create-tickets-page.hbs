@@ -1,0 +1,27 @@
+
+<style>
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #write_ticket{
+        width: 70vh;
+        height: 50vh;
+    }
+    #create_ticket{
+        height: 50px;
+        width: 100px;
+    }
+</style>
+
+<body>
+<div class="container">
+    <form method="post" action="/generate-tickets">
+    <label for="write_ticket">Please Enter your Query:</label><br>
+    <textarea id="write_ticket" name="write_ticket"></textarea><br>
+    <input type="submit" name="create_ticket" id="create_ticket" value="Create Ticket">
+    </form>
+</div>
+</body>

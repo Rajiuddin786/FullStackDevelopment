@@ -1,0 +1,42 @@
+<style>
+    .container {
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .btn {
+        height: 70px;
+        width: 170px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #track_ticket {
+        background-color: #2196F3;
+    }
+
+    .btn:hover {
+        opacity: 0.8;
+    }
+</style>
+
+<body>
+<div class="container">
+    <input type="button" class="btn" name="create_tickets" id="create_ticket" value="Create Ticket">
+    <input type="button" class="btn" name="track_tickets" id="track_ticket" value="Track Ticket">
+</div>
+<script>
+    document.getElementById("create_ticket").onclick = () =>{
+        window.location.href = "/create-ticket-page"
+    }
+    document.getElementById("track_ticket").onclick = () =>{
+        window.location.href = "/track-ticket-page"
+    }
+</script>
+</body>
