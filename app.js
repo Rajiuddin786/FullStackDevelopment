@@ -3,6 +3,8 @@ const port = process.env.PORT || 3000
 const hbs=require("hbs")
 const bodyParser = require("body-parser")
 const path = require("path")
+require("./mongodb.js")
+const register = require("./tickets.js")
 
 
 const app = express()
@@ -47,7 +49,16 @@ app.get("/create-ticket-page",(req,res)=>{
 })
 app.post("/generate-tickets",async (req,res)=>{
     const query=req.body.write_ticket;
-    res.send(query)
+    try{
+    const insert_ticket = new register({
+        ticket:query,
+    })
+    const inserted_ticket = await insert_ticket.save()
+    res.render("confirm_submission")
+    }
+    catch(e){
+        res.status(404).send(e)
+    }
 })
 app.get("/track-ticket-page",(req,res)=>{
     res.send("Hello")

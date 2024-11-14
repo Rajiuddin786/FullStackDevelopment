@@ -1,0 +1,19 @@
+<style>
+    .container{
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<body>
+    <div class="container">
+        <span>Successfully Submitted your Query</span>
+        <input type="button" id="go_back_btn" value="Go Back">
+    </div>
+<script>
+    document.getElementById("go_back_btn").onclick = () =>{
+        window.location.href = "/create-ticket-page"
+    }
+</script>
+</body>

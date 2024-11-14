@@ -3,6 +3,8 @@
     "body-parser": "^1.20.3",
     "express": "^4.21.1",
     "express-handlebars": "^8.0.1",
-    "hbs": "^4.2.0"
+    "hbs": "^4.2.0",
+    "mongoose": "^8.8.1",
+    "nodemon": "^3.1.7"
   }
 }
