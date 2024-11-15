@@ -60,6 +60,12 @@ app.post("/generate-tickets",async (req,res)=>{
         res.status(404).send(e)
     }
 })
-app.get("/track-ticket-page",(req,res)=>{
-    res.send("Hello")
+app.get("/track-ticket-page",async (req,res)=>{
+    const data = await register.find()
+    res.render("track-tickets-page",{tickets:data})
+})
+app.post("/delete-ticket",async (req,res)=>{
+    const id = req.body.id
+    const delete_ticket = await register.deleteOne({_id:id})
+    res.send("<script>window.location.href='/track-ticket-page'</script>")
 })
