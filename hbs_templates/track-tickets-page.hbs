@@ -14,6 +14,9 @@
         padding: 8px;
         text-align: center;
     }
+    #go_back_btn{
+        display: block;
+    }
 </style>
 <body>
 <div class="container">
@@ -28,9 +31,18 @@
             <tr>
                 <td>{{ticket}}</td>
                 <td>{{status}}</td>
-                <td><form method="post" action="/delete-ticket"><input readonly type="hidden" name="id"><input type="submit" value="Delete" id="delete_btn"></form></td>
+                <td><form method="post" action="/delete-ticket"><input readonly type="hidden" name="id" value={{_id}}><input type="submit" value="Delete" id="delete_btn"></form></td>
             </tr>
         {{/each}}
     </table>
 </div>
+<div class="container">
+<input type="button" value="Go Back" id="go_back_btn">
+    {{>logout_btn}}
+</div>
+<script>
+    document.getElementById("go_back_btn").onclick = () =>{
+        window.location.href = '/tickets-user'
+    }
+</script>
 </body>

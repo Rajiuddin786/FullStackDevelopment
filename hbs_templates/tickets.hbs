@@ -30,7 +30,9 @@
 <div class="container">
     <input type="button" class="btn" name="create_tickets" id="create_ticket" value="Create Ticket">
     <input type="button" class="btn" name="track_tickets" id="track_ticket" value="Track Ticket">
+    {{>logout_btn}}
 </div>
+
 <script>
     document.getElementById("create_ticket").onclick = () =>{
         window.location.href = "/create-ticket-page"

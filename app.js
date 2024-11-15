@@ -3,8 +3,9 @@ const port = process.env.PORT || 3000
 const hbs=require("hbs")
 const bodyParser = require("body-parser")
 const path = require("path")
-require("./mongodb.js")
-const register = require("./tickets.js")
+require("./Database/mongodb.js")
+const register = require("./Database/tickets.js")
+const logout_btn = path.join(__dirname, "./Partials")
 
 
 const app = express()
@@ -13,6 +14,7 @@ app.use(express.static(path.join(__dirname, 'src')));
 app.set("views", path.join(__dirname,"../src"))
 app.set("view engine", "hbs")
 app.set("views", path.join(__dirname,"hbs_templates"))
+hbs.registerPartials(logout_btn)
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.listen(port,()=>{
@@ -39,7 +41,7 @@ app.post("/login-user",async (req,res)=>{
     const user_id = req.body.user_id;
     const user_pass=req.body.user_pass;
     console.log(user_id)
-    res.send("Successfully logged in!")
+    res.send("<script>window.location.href='/tickets-user'</script>")
 })
 app.get("/tickets-user",(req,res)=>{
     res.render("tickets")
@@ -65,7 +67,7 @@ app.get("/track-ticket-page",async (req,res)=>{
     res.render("track-tickets-page",{tickets:data})
 })
 app.post("/delete-ticket",async (req,res)=>{
-    const id = req.body.id
+    const id =req.body.id
     const delete_ticket = await register.deleteOne({_id:id})
     res.send("<script>window.location.href='/track-ticket-page'</script>")
 })
