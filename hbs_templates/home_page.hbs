@@ -1,0 +1,27 @@
+<style>
+    .container{
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    .container input{
+        width: 200px;
+        height: 200px;
+    }
+</style>
+<body>
+    <div class="container">
+        <input type="button" value="Admin Log In" id="admin_login_btn">
+        <input type="button" value="User Log In" id="user_login_btn">
+    </div>
+<script>
+    document.getElementById("admin_login_btn").onclick = () =>{
+        window.location.href = "/login-admin"
+    }
+    document.getElementById("user_login_btn").onclick = () =>{
+        window.location.href = "/login-user"
+    }
+</script>
+</body>

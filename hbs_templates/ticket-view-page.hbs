@@ -1,0 +1,20 @@
+<style>
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #view_ticket{
+        width: 70vh;
+        height: 50vh;
+    }
+</style>
+<body>
+<div class="container">
+    <label for="view_ticket">User Query</label>
+    {{#each tickets}}<textarea readonly id="view_ticket">{{ticket}}</textarea>
+    {{/each}}
+    <input type="button" value="Reply" id="reply_btn">
+</div>
+</body>

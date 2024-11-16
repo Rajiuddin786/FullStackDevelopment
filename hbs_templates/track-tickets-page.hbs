@@ -27,8 +27,7 @@
             <th>Action</th>
         </tr>
         {{#each tickets}}
-
-            <tr>
+            <tr id="ticket-{{_id}}">
                 <td>{{ticket}}</td>
                 <td>{{status}}</td>
                 <td><form method="post" action="/delete-ticket"><input readonly type="hidden" name="id" value={{_id}}><input type="submit" value="Delete" id="delete_btn"></form></td>

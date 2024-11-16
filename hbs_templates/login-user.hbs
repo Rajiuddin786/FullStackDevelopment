@@ -1,0 +1,41 @@
+<style>
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .form-group{
+        display: block;
+        margin: 10px;
+    }
+    #new_user{
+        display: flex;
+        float: right;
+    }
+</style>
+
+<body>
+<input type="button" id="new_user" value="Sign Up">
+<script>
+    document.getElementById("new_user").onclick = () =>{
+        window.location.href = "/sign-up"
+    }
+</script>
+<div class="container" id="admin">
+    <form method="post" action="/login-user">
+        <div class="form-group">
+            <label for="user_id">Enter Username or Email:</label><br>
+            <input type="text"  name="user_id" id="user_id" placeholder="Enter Username or Email">
+        </div>
+        <div class="form-group">
+            <label for="user_pass">Password:</label><br>
+            <input type="text"  name="user_pass" id="user_pass" placeholder="Enter Password">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Log In">
+        </div>
+    </form>
+
+</div>
+</body>
