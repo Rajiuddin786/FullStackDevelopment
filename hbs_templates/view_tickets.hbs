@@ -1,21 +1,71 @@
 <style>
+    body {
+        background-image: url("/images/view_page_background_admin.jpg");
+        background-size: cover;
+    }
+
     .container {
         display: flex;
         justify-content: center;
+        padding: 20px
     }
+
     .container table {
-        border: 2px solid black;
-        margin: 10px;
+        width: 90%;
+        max-width: 1200px;
+        border: 2px solid #007bff;
         border-collapse: collapse;
+        background-color: #ffffff;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
-    .container table th,
+
+    .container table th {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
     .container table td {
-        border: 1px solid black;
-        padding: 8px;
+        border: 1px solid #dddddd;
+        padding: 10px;
         text-align: center;
+        font-size: 14px;
+    }
+
+    .container table td input[type="text"] {
+        margin: 3px;
+        width: 100%;
+        padding: 5px;
+        font-size: 14px;
+    }
+
+    .container table td input[type="submit"],
+    .container table td input[type="button"] {
+        margin: 5px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .container table td input[type="submit"]:hover,
+    .container table td input[type="button"]:hover {
+        background-color: #0056b3;
+    }
+
+    .container table td label {
+        font-weight: bold;
+        font-size: 14px;
     }
 </style>
+
 <body>
+{{>bootstrap}}
 <div class="container">
     <table>
         <tr>
@@ -23,14 +73,16 @@
             <th>Ticket Id</th>
             <th>Tickets</th>
             <th>Status</th>
+            <th>View</th>
+            <th>Delete</th>
         </tr>
         {{#each tickets}}
             <tr>
                 <td>{{email}}</td>
-                <td><label for="_id">Ticket Id</label><input type="text" name="id" value="{{_id}}" readonly id="_id"></td>
+                <td><label for="_id">Ticket Id -:</label><input type="text" name="id" value="{{_id}}" readonly id="_id"></td>
                <td>{{ticket}}</td>
                 <td><form method="post" action="/update_status" >
-                    <label for="status">Change Status</label>
+                    <label for="status">Change Status:</label>
                     <input type="hidden" name="id" value="{{_id}}" readonly>
                     <input type="text" name="status" value="{{status}}" id="status">
                     <input type="submit" value="Update" >

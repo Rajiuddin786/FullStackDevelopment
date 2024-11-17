@@ -7,14 +7,17 @@ require("./Database/mongodb.js")
 const register = require("./Database/tickets.js")
 const user_data=require("./Database/user.js")
 const admin_data=require("./Database/admin.js")
-const logout_btn = path.join(__dirname, "./Partials")
+const partials = path.join(__dirname, "./Partials")
+
 
 
 const app = express()
 
+app.use("/images",express.static(path.join(__dirname, './Public/assets')));
+
 app.set("view engine", "hbs")
 app.set("views", path.join(__dirname,"hbs_templates"))
-hbs.registerPartials(logout_btn)
+hbs.registerPartials(partials)
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.listen(port,()=>{
