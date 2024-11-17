@@ -19,13 +19,15 @@
 <div class="container">
     <table>
         <tr>
+            <th>Email</th>
             <th>Ticket Id</th>
             <th>Tickets</th>
             <th>Status</th>
         </tr>
         {{#each tickets}}
             <tr>
-                <td><input type="text" name="id" value="{{_id}}" readonly></td>
+                <td>{{email}}</td>
+                <td><label for="_id">Ticket Id</label><input type="text" name="id" value="{{_id}}" readonly id="_id"></td>
                <td>{{ticket}}</td>
                 <td><form method="post" action="/update_status" >
                     <label for="status">Change Status</label>

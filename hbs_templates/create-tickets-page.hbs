@@ -22,7 +22,7 @@
 
 <body>
 <div class="container">
-    <form method="post" action="/generate-tickets">
+    <form method="post" action="/generate-tickets-{{email}}">
     <label for="write_ticket">Please Enter your Query:</label><br>
     <textarea id="write_ticket" name="write_ticket"></textarea><br>
     <input type="submit" name="create_ticket" id="create_ticket" value="Create Ticket">
@@ -32,7 +32,7 @@
 </div>
 <script>
     document.getElementById("go_back_btn").onclick = () =>{
-        window.location.href = "/tickets-user"
+        window.location.href = `/tickets-user-{{email}}`
     }
 </script>
 </body>

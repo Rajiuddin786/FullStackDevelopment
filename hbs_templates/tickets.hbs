@@ -35,10 +35,10 @@
 
 <script>
     document.getElementById("create_ticket").onclick = () =>{
-        window.location.href = "/create-ticket-page"
+        window.location.href = `/create-ticket-page-{{email}}`
     }
     document.getElementById("track_ticket").onclick = () =>{
-        window.location.href = "/track-ticket-page"
+        window.location.href = `/track-ticket-page-{{email}}`
     }
 </script>
 </body>
