@@ -1,21 +1,75 @@
+<script>
+    window.onload = function() {
+        const message = "{{message}}";
+        if (message) {
+            alert(message);
+        }
+    };
+</script>
 <style>
-    body{
+    body {
         background-image: url("/images/admin_background.jpg");
         background-size: cover;
+        background-position: center;
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
     }
-    .container{
+
+    .container {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
+        position: relative; /* Position relative for overlay */
+        z-index: 1; /* Ensure content is above the overlay */
     }
-    .form-group{
+
+    .form-group {
         display: block;
-        margin: 10px;
-        font-family: "Open Sans", sans-serif;
+        margin: 15px 0; /* Adjusted margin for better spacing */
     }
-    .text_box{
-        border: 1px solid black;
+
+    .text_box {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    .text_box:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            padding: 20px;
+        }
+
+        .text_box {
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+        }
     }
 </style>
 <body>

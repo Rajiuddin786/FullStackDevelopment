@@ -2,65 +2,139 @@
     body {
         background-image: url("/images/view_page_background_admin.jpg");
         background-size: cover;
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
     }
 
     .container {
         display: flex;
         justify-content: center;
-        padding: 20px
+        padding: 20px;
+        overflow-x: auto; /* Allow horizontal scrolling for small screens */
     }
 
     .container table {
         width: 90%;
         max-width: 1200px;
-        border: 2px solid #007bff;
+        border: 2px solid #008080; /* Teal border */
         border-collapse: collapse;
-        background-color: #ffffff;
+        background-color: #ffffff; /* White background for the table */
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px; /* Rounded corners */
+        overflow: hidden; /* Prevents overflow of rounded corners */
     }
 
     .container table th {
-        background-color: #007bff;
+        background-color: #008080; /* Teal header */
         color: white;
-        padding: 10px;
+        padding: 12px;
         text-transform: uppercase;
         font-size: 14px;
+        text-align: left; /* Align text to the left */
     }
 
     .container table td {
-        border: 1px solid #dddddd;
+        border: 1px solid #dddddd; /* Light gray border */
         padding: 10px;
         text-align: center;
         font-size: 14px;
+        transition: background-color 0.3s; /* Smooth background transition */
+    }
+
+    .container table tr:hover td {
+        background-color: #e0f7f7; /* Light teal on row hover */
     }
 
     .container table td input[type="text"] {
         margin: 3px;
-        width: 100%;
-        padding: 5px;
+        width: calc(100% - 10px); /* Full width minus padding */
+        padding: 10px; /* Increased padding */
         font-size: 14px;
+        border: 1px solid #ccc; /* Light border */
+        border-radius: 4px; /* Rounded corners */
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
     }
 
     .container table td input[type="submit"],
     .container table td input[type="button"] {
         margin: 5px;
-        background-color: #007bff;
+        background-color: #008080; /* Teal button */
         color: white;
         border: none;
-        padding: 6px 10px;
+        padding: 10px 15px; /* Increased padding */
         border-radius: 4px;
         cursor: pointer;
         font-size: 14px;
+        transition: background-color 0.3s, transform 0.2s; /* Added transform transition */
     }
 
     .container table td input[type="submit"]:hover,
     .container table td input[type="button"]:hover {
-        background-color: #0056b3;
+        background-color: #006666; /* Darker teal on hover */
+        transform: scale(1.05); /* Slightly enlarge on hover */
     }
 
     .container table td label {
         font-weight: bold;
         font-size: 14px;
+    }
+
+    .logout-container {
+        display: flex;
+        justify-content: flex-end; /* Align the button to the right */
+        padding: 20px; /* Padding around the container */
+        margin-top: 20px; /* Margin for spacing */
+    }
+
+    .logout-container form {
+        display: flex;
+        justify-content: center; /* Center the button within the form */
+        align-items: center;
+    }
+
+    .logout-container input[type="submit"] {
+        padding: 10px 20px; /* Padding for the button */
+        font-size: 16px; /* Font size */
+        color: white; /* Text color */
+        background-color: #008080; /* Teal background */
+        border: none; /* No border */
+        border-radius: 4px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s, transform 0.2s; /* Smooth background transition */
+    }
+    .logout-container input[type="submit"]:hover {
+        background-color: #006666; /* Darker teal on hover */
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+
+    @media (max-width: 600px) {
+        .container table {
+            width: 100%;
+        }
+
+        .container table td input[type="text"],
+        .container table td input[type="submit"],
+        .container table td input[type="button"],
+        .logout-container input[type="submit"] {
+            font-size: 14px;
+        }
+
+        .container table td input[type="text"] {
+            width: 100%;
+        }
+
+        .container table td label {
+            font-size: 12px;
+        }
+
+        .container table td input[type="submit"],
+        .container table td input[type="button"] {
+            padding: 8px 12px;
+        }
+
+        .logout-container input[type="submit"] {
+            padding: 8px 12px;
+        }
     }
 </style>
 
@@ -79,34 +153,41 @@
         {{#each tickets}}
             <tr>
                 <td>{{email}}</td>
-                <td><label for="_id">Ticket Id -:</label><input type="text" name="id" value="{{_id}}" readonly id="_id"></td>
-               <td>{{ticket}}</td>
-                <td><form method="post" action="/update_status" >
-                    <label for="status">Change Status:</label>
-                    <input type="hidden" name="id" value="{{_id}}" readonly>
-                    <input type="text" name="status" value="{{status}}" id="status">
-                    <input type="submit" value="Update" >
-                </form> </td>
+                <td><label for="ticketId_{{_id}}">Ticket Id -:</label><input type="text" name="id" value="{{_id}}" readonly id="ticketId_{{_id}}"></td>
+                <td>{{ticket}}</td>
                 <td>
-                    <input type="button" value="View" class="view_btn" data-id="{{_id}}">
+                    <form method="post" action="/update_status">
+                        <label for="status_{{_id}}">Change Status:</label>
+                        <input type="hidden" name="id" value="{{_id}}" readonly>
+                        <input type="text" name="status" value="{{status}}" id="status_{{_id}}">
+                        <input type="submit" value="Update" aria-label="Update status for ticket {{ticket}}">
+                    </form>
                 </td>
                 <td>
-                    <input type="button" value="Delete" class="delete_btn" data-id="{{id}}">
+                    <button type="button" class="view_btn" data-id="{{_id}}" aria-label="View ticket {{ticket}}">View</button>
+                </td>
+                <td>
+                    <button type="button" class="delete_btn" data-id="{{_id}}" aria-label="Delete ticket {{ticket}}">Delete</button>
                 </td>
             </tr>
         {{/each}}
     </table>
 </div>
+<div class="logout-container">
+    <form action="/logout-{{user}}">
+        <input type="submit" value="Log Out">
+    </form>
+</div>
 <script>
-    document.querySelectorAll(".view_btn").forEach(button =>{
-        button.addEventListener("click",() =>{
+    document.querySelectorAll(".view_btn").forEach(button => {
+        button.addEventListener("click", () => {
             const id = button.getAttribute("data-id")
             window.location.href = `/ticket-view-page-${id}`
         })
     })
 
-    document.querySelectorAll(".delete_btn").forEach(button =>{
-        button.addEventListener("click",() =>{
+    document.querySelectorAll(".delete_btn").forEach(button => {
+        button.addEventListener("click", () => {
             const id = button.getAttribute("data-id")
             window.location.href = `/delete-${id}`
         })

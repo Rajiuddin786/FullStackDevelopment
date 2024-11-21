@@ -1,17 +1,74 @@
 <style>
-    .container{
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #4facfe, #00f2fe); /* Gradient background */
+        color: #333; /* Text color */
+    }
+
+    .container {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        height: 100vh; /* Full viewport height */
     }
-    .form-group{
-        display: block;
-        margin: 10px;
+
+    form {
+        background: white; /* Form background */
+        padding: 20px; /* Padding inside the form */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
     }
-    #new_user{
-        display: flex;
-        float: right;
+
+    .form-group {
+        margin: 15px 0; /* Space between form groups */
+    }
+
+    label {
+        display: block; /* Block display for labels */
+        margin-bottom: 5px; /* Space below the label */
+        font-weight: bold; /* Bold label text */
+    }
+
+    input[type="text"] {
+        width: 100%; /* Full width input */
+        padding: 10px; /* Padding inside the input */
+        border: 1px solid #ccc; /* Border styling */
+        border-radius: 5px; /* Rounded corners */
+        font-size: 16px; /* Font size for input */
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50; /* Button background color */
+        color: white; /* Button text color */
+        padding: 10px; /* Button padding */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        font-size: 16px; /* Button font size */
+        transition: background-color 0.3s; /* Smooth transition */
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049; /* Darker shade on hover */
+    }
+
+    #new_user {
+        position: absolute; /* Position button at the top right */
+        top: 20px; /* Distance from the top */
+        right: 20px; /* Distance from the right */
+        padding: 10px 20px; /* Button padding */
+        font-size: 16px; /* Button font size */
+        color: white; /* Button text color */
+        background-color: #007BFF; /* Button background color */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s; /* Smooth transition */
+    }
+
+    #new_user:hover {
+        background-color: #0056b3; /* Darker shade on hover */
     }
 </style>
 
@@ -19,24 +76,23 @@
 {{>bootstrap}}
 <input type="button" id="new_user" value="Sign Up">
 <script>
-    document.getElementById("new_user").onclick = () =>{
-        window.location.href = "/sign-up"
+    document.getElementById("new_user").onclick = () => {
+        window.location.href = "/sign-up";
     }
 </script>
 <div class="container" id="admin">
     <form method="post" action="/login-user">
         <div class="form-group">
-            <label for="user_id">Enter Username or Email:</label><br>
-            <input type="text"  name="user_id" id="user_id" placeholder="Enter Username or Email">
+            <label for="user_id">Enter Username or Email:</label>
+            <input type="text" name="user_id" id="user_id" placeholder="Enter Username or Email" required>
         </div>
         <div class="form-group">
-            <label for="user_pass">Password:</label><br>
-            <input type="text"  name="user_pass" id="user_pass" placeholder="Enter Password">
+            <label for="user_pass">Password:</label>
+            <input type="text" name="user_pass" id="user_pass" placeholder="Enter Password" required>
         </div>
         <div class="form-group">
             <input type="submit" value="Log In">
         </div>
     </form>
-
 </div>
 </body>

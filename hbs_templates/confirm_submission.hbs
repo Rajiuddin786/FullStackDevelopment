@@ -1,20 +1,50 @@
 <style>
-    .container{
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+        color: white; /* Text color */
+    }
+
+    .container {
         display: flex;
+        flex-direction: column; /* Stack elements vertically */
         height: 100vh;
         justify-content: center;
         align-items: center;
+        text-align: center; /* Center text */
+    }
+
+    span {
+        font-size: 24px; /* Larger font size for the message */
+        margin-bottom: 20px; /* Space between message and button */
+    }
+
+    #go_back_btn {
+        padding: 10px 20px; /* Button padding */
+        font-size: 16px; /* Button font size */
+        color: white; /* Button text color */
+        background-color: #ff4757; /* Button background color */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s; /* Smooth transition */
+    }
+
+    #go_back_btn:hover {
+        background-color: #ff6b81; /* Lighter color on hover */
     }
 </style>
+
 <body>
 {{>bootstrap}}
-    <div class="container">
-        <span>Successfully Submitted your Query</span>
-        <input type="button" id="go_back_btn" value="Go Back">
-    </div>
+<div class="container">
+    <span>Successfully Submitted your Query</span>
+    <input type="button" id="go_back_btn" value="Go Back">
+</div>
 <script>
-    document.getElementById("go_back_btn").onclick = () =>{
-        window.location.href = `/create-ticket-page-{{email}}`
+    document.getElementById("go_back_btn").onclick = () => {
+        window.location.href = `/create-ticket-page-{{email}}`;
     }
 </script>
 </body>

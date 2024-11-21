@@ -8,6 +8,7 @@ const register = require("./Database/tickets.js")
 const user_data=require("./Database/user.js")
 const admin_data=require("./Database/admin.js")
 const partials = path.join(__dirname, "./Partials")
+const session = require("express-session")
 
 
 
@@ -20,46 +21,71 @@ app.set("views", path.join(__dirname,"hbs_templates"))
 hbs.registerPartials(partials)
 app.use(bodyParser.urlencoded({ extended: true }))
 
+
 app.listen(port,()=>{
 console.log(`Server started on port ${port}`)
 })
+
+app.use(
+    session(
+        {
+            secret:"ddsc12",
+            resave:false,
+            saveUninitialized:true,
+            cookie:false
+        }
+    )
+)
 
 app.get("/",(req,res)=>{
     res.render("home_page")
 })
 
+app.get("/logout-:user", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.redirect("/");
+        }
+        const type_user = req.params.user;
+        const message = "Logout Successful!";
+        res.redirect(`login-${type_user}`);
+    });
+});
+
 app.get("/login-admin",(req,res)=>{
     res.render("login-admin")
 })
-app.post("/authenticate-admin",async (req,res)=>{
+app.post("/authenticate-admin", async (req, res) => {
     const user_id = req.body.admin_id;
-    const user_pass=String(req.body.admin_pass);
+    const user_pass = String(req.body.admin_pass);
 
-    const validate_admin=await admin_data.findOne({email:user_id})
-
-    if(!validate_admin){
-        res.send("Failed to login admin")
+    const validate_admin = await admin_data.findOne({ email: user_id });
+    if (!validate_admin) {
+        res.send("Failed to login admin");
+    } else {
+        const password_admin = validate_admin.password;
+        if (password_admin == user_pass) {
+            req.session.admin = { id: validate_admin._id, email: user_id };
+            res.redirect("/view-tickets")
+        } else {
+            res.send("Invalid password");
+        }
+    }
+});
+app.get(`/view-tickets`,async (req, res)=>{
+    if(req.session.admin) {
+        const data = await register.find()
+        res.render("view_tickets", {tickets: data, user: "admin"})
     }
     else{
-        const password_admin=validate_admin.password
-        if(password_admin == user_pass){
-            res.send('<script>window.location.href="/view-tickets"</script>')
-        }
-        else{
-            res.send(password_admin)
-        }
+        res.redirect("/login-admin");
     }
-
-})
-app.get(`/view-tickets`,async (req, res)=>{
-    const data = await register.find()
-    res.render("view_tickets",{tickets:data})
 })
 app.post("/update_status",async (req,res)=>{
     const curr_status=req.body.status
     const id=req.body.id;
     await register.updateOne({_id:id},{$set:{status:curr_status}})
-    res.send('<script>window.location.href="/view-tickets"</script>')
+    res.redirect("/view-tickets")
 })
 app.get("/delete-:id",async (req,res)=>{
     const id=req.params.id;
@@ -68,8 +94,19 @@ app.get("/delete-:id",async (req,res)=>{
 })
 app.get("/ticket-view-page-:id",async (req,res)=>{
     const id=req.params.id;
-    const data= await register.find({_id:id})
-    res.render("ticket-view-page",{tickets:data})
+    const data= await register.findOne({_id:id})
+    const ticket=data.ticket
+    res.render("ticket-view-page",{user_ticket:ticket,user_id:id})
+})
+app.get("/reply-page-:id",(req,res)=>{
+    const user_id=req.params.id;
+    res.render("reply-page",{id:user_id})
+})
+app.post("/reply-to-user-:id",async (req,res)=>{
+    const id=req.params.id;
+    const reply_to_user=req.body.response_to_user;
+    const user =await register.updateOne({_id:id},{$set:{reply:reply_to_user}})
+    res.redirect(`/view-tickets`)
 })
 app.get("/login-user",async (req,res)=>{
     res.render("login-user")
@@ -85,6 +122,7 @@ app.post("/login-user",async (req,res)=>{
     else{
         const password=validate_user.password
         if(user_pass===password){
+            req.session.user = { id: validate_user._id, email: user_id };
             res.redirect(`/tickets-user-${user_id}`);
         }
         else{
@@ -135,8 +173,13 @@ app.post("/sign-up_new-user",async (req,res)=>{
     }
 })
 app.get("/tickets-user-:id",async (req,res)=>{
-    const id=req.params.id
-    res.render("tickets",{email:id})
+    if(req.session.user) {
+        const id = req.params.id
+        res.render("tickets", {email: id})
+    }
+    else{
+        res.redirect("login-user")
+    }
 })
 app.get("/create-ticket-page-:id",(req,res)=>{
     const id=req.params.id

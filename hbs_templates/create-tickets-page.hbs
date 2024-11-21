@@ -1,22 +1,64 @@
-
 <style>
-    .container{
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+        color: #333; /* Text color */
+    }
+
+    .container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        height: 100vh; /* Full viewport height */
+        text-align: center; /* Center text */
+        padding: 20px; /* Padding around the container */
     }
-    #write_ticket{
-        width: 70vh;
-        height: 50vh;
+
+    label {
+        font-size: 18px; /* Larger font size for the label */
+        margin-bottom: 10px; /* Space below the label */
     }
-    #create_ticket{
-        height: 50px;
-        width: 100px;
+
+    #write_ticket {
+        width: 70vh; /* Width of the textarea */
+        height: 50vh; /* Height of the textarea */
+        padding: 10px; /* Padding inside the textarea */
+        border: 1px solid #ccc; /* Border styling */
+        border-radius: 5px; /* Rounded corners */
+        font-size: 16px; /* Font size inside the textarea */
+        resize: none; /* Disable resizing */
+        margin-bottom: 20px; /* Space below the textarea */
     }
-    #go_back_btn{
-        height: 50px;
-        width: 100px;
+
+    input[type="submit"], #go_back_btn {
+        height: 50px; /* Button height */
+        width: 100px; /* Button width */
+        font-size: 16px; /* Button font size */
+        color: white; /* Button text color */
+        background-color: #4CAF50; /* Button background color */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s; /* Smooth transition */
+        margin: 5px; /* Space between buttons */
+    }
+
+    input[type="submit"]:hover, #go_back_btn:hover {
+        background-color: #45a049; /* Darker shade on hover */
+    }
+
+    .logout-container {
+        margin-top: 20px; /* Space above the logout button */
+    }
+
+    .logout-container input[type="submit"] {
+        background-color: #e74c3c; /* Logout button color */
+    }
+
+    .logout-container input[type="submit"]:hover {
+        background-color: #c0392b; /* Darker shade on hover */
     }
 </style>
 
@@ -24,16 +66,21 @@
 {{>bootstrap}}
 <div class="container">
     <form method="post" action="/generate-tickets-{{email}}">
-    <label for="write_ticket">Please Enter your Query:</label><br>
-    <textarea id="write_ticket" name="write_ticket"></textarea><br>
-    <input type="submit" name="create_ticket" id="create_ticket" value="Create Ticket">
+        <label for="write_ticket">Please Enter your Query:</label><br>
+        <textarea id="write_ticket" name="write_ticket" required></textarea><br>
+        <input type="submit" name="create_ticket" id="create_ticket" value="Create Ticket">
     </form>
     <input type="button" value="Go Back" id="go_back_btn">
     {{>logout_btn}}
 </div>
+<div class="logout-container">
+    <form action="/logout-{{user}}">
+        <input type="submit" value="Log Out">
+    </form>
+</div>
 <script>
-    document.getElementById("go_back_btn").onclick = () =>{
-        window.location.href = `/tickets-user-{{email}}`
+    document.getElementById("go_back_btn").onclick = () => {
+        window.location.href = `/tickets-user-{{email}}`;
     }
 </script>
 </body>

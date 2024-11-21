@@ -1,28 +1,86 @@
 <style>
-    .container{
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+        color: #333; /* Text color */
+    }
+
+    .container {
         display: flex;
-        height: 100vh;
+        height: 100vh; /* Full viewport height */
         justify-content: center;
         align-items: center;
     }
-    .container input{
-        margin: 10px;
+
+    form {
+        background: white; /* Form background */
+        padding: 30px; /* Padding inside the form */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        width: 300px; /* Fixed width for the form */
+    }
+
+    .form-group {
+        margin: 15px 0; /* Space between form groups */
+    }
+
+    label {
+        display: block; /* Block display for labels */
+        margin-bottom: 5px; /* Space below the label */
+        font-weight: bold; /* Bold label text */
+    }
+
+    input[type="text"] {
+        width: 100%; /* Full width input */
+        padding: 10px; /* Padding inside the input */
+        border: 1px solid #ccc; /* Border styling */
+        border-radius: 5px; /* Rounded corners */
+        font-size: 16px; /* Font size for input */
+        box-sizing: border-box; /* Include padding in width */
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50; /* Button background color */
+        color: white; /* Button text color */
+        padding: 10px; /* Button padding */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        font-size: 16px; /* Button font size */
+        transition: background-color 0.3s; /* Smooth transition */
+        margin-top: 15px; /* Space above the button */
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049; /* Darker shade on hover */
     }
 </style>
+
 <body>
 {{>bootstrap}}
 <div class="container">
     <form method="post" action="/sign-up_new-user" class="form-group">
-        <label for="fname">First Name:</label>
-        <input type="text" placeholder="First Name" id="fname" name="fname">
-        <label for="lname">Last Name:</label>
-        <input type="text" placeholder="Last Name" id="lname" name="lname"><br>
-        <label for="email">Email Id:</label>
-        <input type="text" placeholder="Enter Email" id="email" name="email"><br>
-        <label for="password">Enter Password:</label>
-        <input type="text" placeholder="Enter Password" id="password" name="password"><br>
-        <label for="cpassword">Confirm Password:</label>
-        <input type="text" id="cpassword" placeholder="Confirm Password" name="cpassword"><br>
+        <div class="form-group">
+            <label for="fname">First Name:</label>
+            <input type="text" placeholder="First Name" id="fname" name="fname" required>
+        </div>
+        <div class="form-group">
+            <label for="lname">Last Name:</label>
+            <input type="text" placeholder="Last Name" id="lname" name="lname" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email Id:</label>
+            <input type="text" placeholder="Enter Email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Enter Password:</label>
+            <input type="text" placeholder="Enter Password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="cpassword">Confirm Password:</label>
+            <input type="text" id="cpassword" placeholder="Confirm Password" name="cpassword" required>
+        </div>
         <input type="submit" value="Create Account" id="create_account">
     </form>
 </div>
