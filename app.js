@@ -82,31 +82,56 @@ app.get(`/view-tickets`,async (req, res)=>{
     }
 })
 app.post("/update_status",async (req,res)=>{
-    const curr_status=req.body.status
-    const id=req.body.id;
-    await register.updateOne({_id:id},{$set:{status:curr_status}})
-    res.redirect("/view-tickets")
+    if(req.session.admin) {
+        const curr_status = req.body.status
+        const id = req.body.id;
+        await register.updateOne({_id: id}, {$set: {status: curr_status}})
+        res.redirect("/view-tickets")
+    }
+    else{
+        res.redirect("/login-admin");
+    }
 })
 app.get("/delete-:id",async (req,res)=>{
-    const id=req.params.id;
-    await register.deleteOne({_id:id})
-    res.redirect("/view-tickets")
+    if(req.session.admin) {
+        const id = req.params.id;
+        await register.deleteOne({_id: id})
+        res.redirect("/view-tickets")
+    }
+    else{
+        res.redirect("/login-admin")
+    }
 })
 app.get("/ticket-view-page-:id",async (req,res)=>{
-    const id=req.params.id;
-    const data= await register.findOne({_id:id})
-    const ticket=data.ticket
-    res.render("ticket-view-page",{user_ticket:ticket,user_id:id})
+    if(req.session.admin) {
+        const id = req.params.id;
+        const data = await register.findOne({_id: id})
+        const ticket = data.ticket
+        res.render("ticket-view-page", {user_ticket: ticket, user_id: id,user:"admin"})
+    }
+    else{
+        res.redirect("/login-admin")
+    }
 })
 app.get("/reply-page-:id",(req,res)=>{
-    const user_id=req.params.id;
-    res.render("reply-page",{id:user_id})
+    if(req.session.admin) {
+        const user_id = req.params.id;
+        res.render("reply-page", {id: user_id,user:"admin"})
+    }
+    else{
+        res.redirect("login-admin")
+    }
 })
 app.post("/reply-to-user-:id",async (req,res)=>{
-    const id=req.params.id;
-    const reply_to_user=req.body.response_to_user;
-    const user =await register.updateOne({_id:id},{$set:{reply:reply_to_user}})
-    res.redirect(`/view-tickets`)
+    if(req.session.admin) {
+        const id = req.params.id;
+        const reply_to_user = req.body.response_to_user;
+        const user = await register.updateOne({_id: id}, {$set: {reply: reply_to_user}})
+        res.redirect(`/view-tickets`)
+    }
+    else{
+        res.redirect("/login-admin")
+    }
 })
 app.get("/login-user",async (req,res)=>{
     res.render("login-user")
@@ -182,32 +207,61 @@ app.get("/tickets-user-:id",async (req,res)=>{
     }
 })
 app.get("/create-ticket-page-:id",(req,res)=>{
-    const id=req.params.id
-    res.render("create-tickets-page",{email:id})
+    if(req.session.user) {
+        const id = req.params.id
+        res.render("create-tickets-page", {email: id,user:"user"})
+    }
+    else{
+        res.redirect("/login-user")
+    }
 })
 app.post("/generate-tickets-:id",async (req,res)=>{
-    const id=req.params.id
-    const query=req.body.write_ticket;
-    try{
-    const insert_ticket = new register({
-        ticket:query,
-        email:id,
-    })
-    const inserted_ticket = await insert_ticket.save()
-    res.render("confirm_submission",{email:id})
+    if(req.session.user) {
+        const id = req.params.id
+        const query = req.body.write_ticket;
+        try {
+            const insert_ticket = new register({
+                ticket: query,
+                email: id,
+            })
+            const inserted_ticket = await insert_ticket.save()
+            res.render("confirm_submission", {email: id})
+        } catch (e) {
+            res.status(404).send(e)
+        }
     }
-    catch(e){
-        res.status(404).send(e)
+    else{
+        res.redirect("/login-user")
     }
 })
 app.get("/track-ticket-page-:id",async (req,res)=>{
-    const id=req.params.id
-    const data = await register.find({deleted:false,email:id})
-    res.render("track-tickets-page",{tickets:data,email:id})
+    if(req.session.user) {
+        const id = req.params.id
+        const data = await register.find({deleted: false, email: id})
+        res.render("track-tickets-page", {tickets: data, email: id, user: "user"})
+    }
+    else{
+        res.redirect("/login-user")
+    }
 })
 app.post("/delete-ticket-:user_id",async (req,res)=>{
-    const id =req.body.id
-    const userid=req.params.user_id
-    await register.updateOne({_id:id},{$set:{deleted:true}})
-    res.redirect(`/track-ticket-page-${userid}`)
+    if(req.session.user) {
+        const id = req.body.id
+        const userid = req.params.user_id
+        await register.updateOne({_id: id}, {$set: {deleted: true}})
+        res.redirect(`/track-ticket-page-${userid}`)
+    }
+    else{
+        res.redirect("/login-user")
+    }
+})
+app.post("/reply-to-ticket-:email",async (req,res)=>{
+       if(req.session.user) {
+           const id = req.body.id
+           const data = await register.findOne({_id: id})
+           res.render("view_reply", {reply: data.reply, email: req.params.email, user: "user"})
+       }
+       else{
+           res.redirect("/login-user")
+       }
 })

@@ -81,12 +81,17 @@
         <tr>
             <th>Tickets</th>
             <th>Status</th>
+            <th>View Reply</th>
             <th>Action</th>
         </tr>
         {{#each tickets}}
             <tr id="ticket-{{_id}}">
                 <td>{{ticket}}</td>
                 <td>{{status}}</td>
+                <td><form method="post" action="/reply-to-ticket-{{email}}">
+                    <input type="hidden" name="id" value="{{_id}}">
+                    <input type="submit" value="Reply" class="reply_btn">
+                </form></td>
                 <td>
                     <form method="post" action="/delete-ticket-{{email}}">
                         <input type="hidden" name="id" value="{{_id}}">
